@@ -6,10 +6,10 @@
     if (isset($_POST['submit'])) {
         $id=$_POST['id'];
         $password=$_POST['password'];
-        if ($name && $password) {
+        if ($id && $password) {
             $sql = "select * from user where id='$id' and password='$password'";
             $result = mysqli_query($db, $sql);
-            if ($rows) {
+            if ($result) {
                 $output=mysqli_fetch_assoc($result);
                 $id=$output['id'];
                 echo '<div class="sucess">welcome！ </div>';
