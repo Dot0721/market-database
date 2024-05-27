@@ -7,7 +7,7 @@
         $id=$_POST['id'];
         $password=$_POST['password'];
         if ($id && $password) {
-            $sql = "select * from user where id='$id' and password='$password'";
+            $sql = "select * from user where id=$id and password='$password'";
             $result = mysqli_query($db, $sql);
             if ($result) {
                 $output=mysqli_fetch_assoc($result);
