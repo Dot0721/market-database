@@ -3,8 +3,8 @@
     include 'db.php';
     $ID=$_GET['ID'];
     $sql="select * from users where ID=$ID";
-    $result= mysqli_query($db, $mysql);
-    $row=mysqli_fetch_assoc($find);
+    $result= mysqli_query($db, $sql);
+    $row=mysqli_fetch_assoc($result);
     if($row['casherflag']==1){
         echo ' <a href="salesOrder.php?ID=' . $ID . '">Sales Order</a>';
     }

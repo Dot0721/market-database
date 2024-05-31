@@ -4,10 +4,10 @@
     include 'style.html';
     header("Content-Type: text/html; charset=utf8");
     if (isset($_POST['submit'])) {
-        $ID=$_POST['ID'];
+        $name=$_POST['name'];
         $password=$_POST['password'];
-        if ($id && $password) {
-            $sql = "select * from users where ID=$ID and password='$password'";
+        if ($name && $password) {
+            $sql = "select * from users where name=$name and password='$password'";
             $result = mysqli_query($db, $sql);
             if ($result) {
                 $output=mysqli_fetch_assoc($result);
@@ -35,7 +35,7 @@
 <body>
     <div>
         <form name="login" action="index.php" method="post">
-        <p>ID : <input type=text name="ID"></p>
+        <p>Name : <input type=text name="name"></p>
         <p>Password : <input type=text name="password"></p>
         <p><input type="submit" name="submit" value="登入">
     </div>
