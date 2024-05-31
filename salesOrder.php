@@ -19,7 +19,6 @@
         $name=$_POST['name'];
         $sales_amount=$_POST['sales_amount'];
         $sales_price=$_POST['sales_price'];
-        $total_sales_money=$_POST['total_sales_money'];
         $sale_date=$_POST['sale_date'];
     }
 ?>

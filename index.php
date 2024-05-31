@@ -4,18 +4,18 @@
     include 'style.html';
     header("Content-Type: text/html; charset=utf8");
     if (isset($_POST['submit'])) {
-        $id=$_POST['id'];
+        $ID=$_POST['ID'];
         $password=$_POST['password'];
         if ($id && $password) {
-            $sql = "select * from user where id=$id and password='$password'";
+            $sql = "select * from users where ID=$ID and password='$password'";
             $result = mysqli_query($db, $sql);
             if ($result) {
                 $output=mysqli_fetch_assoc($result);
-                $id=$output['id'];
+                $ID=$output['ID'];
                 echo '<div class="sucess">welcome！ </div>';
                 echo "
                 <script>
-                    setTimeout(function(){window.location.href='menu.php?id=" .$id . "';},600);
+                    setTimeout(function(){window.location.href='menu.php?ID=" .$ID . "';},600);
                 </script>";
                 exit;
             } else {
@@ -35,7 +35,7 @@
 <body>
     <div>
         <form name="login" action="index.php" method="post">
-        <p>ID : <input type=text name="id"></p>
+        <p>ID : <input type=text name="ID"></p>
         <p>Password : <input type=text name="password"></p>
         <p><input type="submit" name="submit" value="登入">
     </div>
