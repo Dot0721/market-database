@@ -25,13 +25,13 @@
         $month = $_POST['month'];
         $day = $_POST['day'];
         $query_date = "'$year-$month-$day'";
-        echo "$query_date,$snumber,$sales_amount,$sales_price,$ID";
         $sql="insert  purchase_order(purchase_date,pnumber,ID,amount,purchase_price) values ($query_date,$pnumber,$ID,$amount,$purchase_price)";
         $result = mysqli_query($db, $sql);
             if (!$result) {
                 die('Error: ' . mysqli_error($con));
             } else {
-                
+                $sql="UPDATE `merchandise` SET amount=amount+$amount WHERE mnumber=$pnumber";
+                $result = mysqli_query($db, $sql);
                 echo '<div class="success">Insert successfully ！</div>';
                 echo "
                     <script>
@@ -42,7 +42,7 @@
 ?>
 <body>
     <div>
-        <form name="sales" action="salesOrder.php" method="post">
+        <form name="sales" action="purchaseOrder.php" method="post">
         <input type="hidden" name="ID" value="<?=$ID?>">
         <p>商品編號 : <input type=text name="pnumber"></p>
         <p>進貨數量 : <input type=text name="amount"></p>
