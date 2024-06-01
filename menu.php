@@ -10,6 +10,7 @@
     }
     else if($row['storeflag']==1){
         echo '<a href="purchaseOrder.php?ID=' . $ID . '">Purchase Order</a>';
+        echo '<br>';
         echo '<a href="purchaseReport.php?ID=' . $ID . '">Purchase Report</a>';
     }
     else if($row['managerflag']==1){
