@@ -15,9 +15,14 @@
     }
     else if($row['managerflag']==1){
         echo '<a href="editUser.php?ID=' . $ID . '">edit User</a>';
+        echo '<br>';
         echo '<a href="userData.php?ID=' . $ID . '">user data</a>';
+        echo '<br>';
         echo '<a href="purchaseReport.php?ID=' . $ID . '">Purchase Report</a>';
+        echo '<br>';
         echo '<a href="salesReport.php?ID=' . $ID . '">Sales Report</a>';
+        echo '<br>';
         echo '<a href="supplierData.php?ID=' . $ID . '">supplier</a>';
+        echo '<br>';
     }
 ?>
