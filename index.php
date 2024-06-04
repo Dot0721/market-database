@@ -15,7 +15,7 @@
                 echo '<div >welcome！ </div>';
                 echo "
                 <script>
-                    setTimeout(function(){window.location.href='menu.php?ID=" .$ID . "';},600000);
+                    setTimeout(function(){window.location.href='menu.php?ID=" .$ID . "';},600);
                 </script>";
                 exit;
             } else {
@@ -25,7 +25,7 @@
             echo '<div>Incompleted form！ </div>';
             echo "
     <script>
-        setTimeout(function(){window.location.href='index.php';},200000);
+        setTimeout(function(){window.location.href='index.php';},200);
     </script>";
         }
         mysqli_close($db);
