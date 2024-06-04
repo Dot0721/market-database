@@ -14,8 +14,6 @@
         echo '<a href="purchaseReport.php?ID=' . $ID . '">Purchase Report</a>';
     }
     else if($row['managerflag']==1){
-        echo '<a href="editUser.php?ID=' . $ID . '">edit User</a>';
-        echo '<br>';
         echo '<a href="userData.php?ID=' . $ID . '">user data</a>';
         echo '<br>';
         echo '<a href="purchaseReport.php?ID=' . $ID . '">Purchase Report</a>';
