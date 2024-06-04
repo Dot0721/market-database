@@ -1,7 +1,6 @@
 <title>Login</title>
 <?php
     include 'db.php';
-    include 'style.html';
     header("Content-Type: text/html; charset=utf8");
     if (isset($_POST['submit'])) {
         $name=$_POST['name'];
@@ -9,23 +8,24 @@
         if ($name && $password) {
             $sql = "select * from users where name='$name' and password='$password'";
             $result = mysqli_query($db, $sql);
-            if ($result) {
+            $rows = mysqli_num_rows($result);
+            if ($rows) {
                 $output=mysqli_fetch_assoc($result);
                 $ID=$output['ID'];
-                echo '<div class="sucess">welcome！ </div>';
+                echo '<div >welcome！ </div>';
                 echo "
                 <script>
-                    setTimeout(function(){window.location.href='menu.php?ID=" .$ID . "';},600);
+                    setTimeout(function(){window.location.href='menu.php?ID=" .$ID . "';},600000);
                 </script>";
                 exit;
             } else {
-                echo '<div class="warning">Wrong ID or Password！</div>';
+                echo '<div>Wrong ID or Password！</div>';
             }
         } else {
-            echo '<div class="warning">Incompleted form！ </div>';
+            echo '<div>Incompleted form！ </div>';
             echo "
     <script>
-        setTimeout(function(){window.location.href='index.php';},2000);
+        setTimeout(function(){window.location.href='index.php';},200000);
     </script>";
         }
         mysqli_close($db);
