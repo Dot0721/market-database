@@ -33,18 +33,10 @@
         echo "目前沒有資料";
     }
     if(isset($_POST['back'])){
-        $ID=$_POST['ID'];
-        $sql="select * from users where permissionlevel=3 LIMIT 1";
-        $result = mysqli_query($db,$sql);
-        $row = mysqli_fetch_assoc($result);
-        if (!$result) {
-            die('Error: ' . mysqli_error($db));
-        } else {
             echo "
                 <script>
-                    setTimeout(function(){window.location.href='menu.php?ID=" .$ID."';},600);
+                setTimeout(function(){window.location.href='menu.php?ID=". $ID."';},600);
                 </script>";
-        }
     }
 ?>
 </table>
