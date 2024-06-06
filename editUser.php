@@ -79,7 +79,11 @@
             ?>
         </select>
         <p><input type="submit" name="change" value="更改"> 
-        <p><input type="submit" name="delete" value="刪除"> 
+        <?php
+            if($ID!=$UID){
+                echo'<p><input type="submit" name="delete" value="刪除"> ';
+            }
+        ?>
         <p><input type="submit" name="back" value="返回">
     </div>
 </body>
