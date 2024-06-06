@@ -1,6 +1,7 @@
 <title>addUser</title>
 <?php
     include 'db.php';
+    $ID=$_GET['ID'];
     if(isset($_POST['add'])){
         $name=$_POST['name'];
         $password=$_POST['password'];
@@ -15,7 +16,7 @@
         }else{
             $managerflag = 1;
         }
-        $sql="INSERT INTO `users`(`name`, `password`, `permissionlevel`, `casherflag`, `storeflag`, `managerflag`) VALUES ('$name',$password,$permissionlevel,$casherflag,$storeflag,$managerflag)";
+        $sql="INSERT INTO `users`(`name`, `password`, `permissionlevel`, `casherflag`, `storeflag`, `managerflag`) VALUES ('$name','$password',$permissionlevel,$casherflag,$storeflag,$managerflag)";
         $result= mysqli_query($db,$sql);
         if (!$result) {
             die('Error: ' . mysqli_error($db));

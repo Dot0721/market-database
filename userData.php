@@ -10,17 +10,18 @@
     </tr>
 <?php
     include 'db.php';
+    $ID=$_GET['ID'];
     $sql = "select * from users group by ID";
     $result = mysqli_query($db,$sql);
     if(mysqli_num_rows($result) > 0){
         while($row = mysqli_fetch_assoc($result)){
-            $ID = $row["ID"];
+            $UID = $row["ID"];
             echo "<tr>";
             echo "<td>" . $row["ID"] . "</td>";
             echo "<td>" . $row["name"] . "</td>";
             echo "<td>" . $row["password"] . "</td>";
             echo "<td>" . $row["permissionlevel"] . "</td>";
-            echo "<td>" . '<a href="editUser.php?ID=' . $ID .'">Edit</a>' . "</td>";
+            echo "<td>" . '<a href="editUser.php?ID=' . $ID .'&UID=' . $UID .'">Edit</a>' . "</td>";
             echo "</tr>";
         }
     }else{
@@ -41,7 +42,7 @@
     }
 ?>
 </table>
-<?php echo '<a href="addUser.php?">新增使用者</a>'; ?>
+<?php echo '<a href="addUser.php?ID='.$ID.'">新增使用者</a>'; ?>
 <form name="user" action="userData.php" method="post">
 <p><input type="submit" name="back" value="返回">
 </body> 
