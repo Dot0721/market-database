@@ -10,7 +10,12 @@
     </tr>
 <?php
     include 'db.php';
-    $ID=$_GET['ID'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $ID=$_POST['ID'];
+    }
+    else{
+        $ID=$_GET['ID'];
+    }
     $sql = "select * from users group by ID";
     $result = mysqli_query($db,$sql);
     if(mysqli_num_rows($result) > 0){
@@ -28,6 +33,7 @@
         echo "目前沒有資料";
     }
     if(isset($_POST['back'])){
+        $ID=$_POST['ID'];
         $sql="select * from users where permissionlevel=3 LIMIT 1";
         $result = mysqli_query($db,$sql);
         $row = mysqli_fetch_assoc($result);
@@ -36,7 +42,7 @@
         } else {
             echo "
                 <script>
-                setTimeout(function(){window.location.href='menu.php?ID=" .$row['ID']."';},600);
+                    setTimeout(function(){window.location.href='menu.php?ID=" .$ID."';},600);
                 </script>";
         }
     }
@@ -44,5 +50,6 @@
 </table>
 <?php echo '<a href="addUser.php?ID='.$ID.'">新增使用者</a>'; ?>
 <form name="user" action="userData.php" method="post">
+<input type="hidden" name="ID" value="<?=$ID?>">
 <p><input type="submit" name="back" value="返回">
 </body> 
