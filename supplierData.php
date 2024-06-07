@@ -19,8 +19,8 @@
         for ($i = 0; $i < $inputCount; $i++) {
             $value = isset($inputs[$i]) ? htmlspecialchars($inputs[$i], ENT_QUOTES, 'UTF-8') : '';
             echo "$value";
-            $sql="INSERT INTO connection (way, name)
-            VALUES ($value, '$name')";
+            $sql = "INSERT INTO connection (way, name) 
+            VALUES ('$value', '$name')";
             $result = mysqli_query($db, $sql);
         }
                 echo '<div class="success">Insert successfully ！</div>';
