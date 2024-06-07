@@ -8,6 +8,7 @@
     else{
         $ID=$_GET['ID'];
     }
+    echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu </b> </button> </a>";
     if (isset($_POST['submit'])) {
         $sql="SELECT 
         m.mnumber ,

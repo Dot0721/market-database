@@ -10,6 +10,7 @@
     else{
         $ID=$_GET['ID'];
     }
+    echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu </b> </button> </a>";
     if(isset($_POST['add'])){
         $name=$_POST['name'];
         $password=$_POST['password'];

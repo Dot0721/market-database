@@ -11,6 +11,7 @@
     else{
         $ID=$_GET['ID'];
     }
+    echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu </b> </button> </a>";
     if(isset($_POST['add'])){
         $ID=$_POST['ID'];
         $mnumber=$_POST['mnumber'];

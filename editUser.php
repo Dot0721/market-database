@@ -12,6 +12,7 @@
         $ID=$_GET['ID'];
         $UID=$_GET['UID'];
     }
+    echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu </b> </button> </a>";
     $sql="select * from users where ID=$UID";
     $result=mysqli_query($db,$sql);
     $row=mysqli_fetch_assoc($result);

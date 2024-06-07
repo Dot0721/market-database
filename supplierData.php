@@ -7,6 +7,7 @@
     else{
         $ID=$_GET['ID'];
     }
+    echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu </b> </button> </a>";
     if (isset($_POST['submit'])) {
         $ID=$_POST['ID'];
         $name=$_POST['name'];

@@ -13,6 +13,7 @@
     else{
         $ID=$_GET['ID'];
     }
+    echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu </b> </button> </a>";
     $sql="select * from users where ID=$ID";
     $result= mysqli_query($db, $sql);
     $row=mysqli_fetch_assoc($result);
