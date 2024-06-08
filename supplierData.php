@@ -1,69 +1,77 @@
-<title>salesOrder</title>
-<?php
-    include 'db.php';
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $ID=$_POST['ID'];
-    }
-    else{
-        $ID=$_GET['ID'];
-    }
-    echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu </b> </button> </a>";
-    if (isset($_POST['submit'])) {
-        $ID=$_POST['ID'];
-        $name=$_POST['name'];
-        $address=$_POST['address'];
-        $sql="INSERT INTO supplier (name, address)
-        VALUES ('$name', '$address');";
-        $inputCount = isset($_POST['inputCount']) ? (int)$_POST['inputCount'] : 0;
-        $inputs = isset($_POST['dynamic-input']) ? $_POST['dynamic-input'] : [];
-        $result = mysqli_query($db, $sql);
-        for ($i = 0; $i < $inputCount; $i++) {
-            $value = isset($inputs[$i]) ? htmlspecialchars($inputs[$i], ENT_QUOTES, 'UTF-8') : '';
-            echo "$value";
-            $sql = "INSERT INTO connection (way, name) 
-            VALUES ('$value', '$name')";
-            $result = mysqli_query($db, $sql);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Supplier List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-                echo '<div class="success">Insert successfully ！</div>';
-                echo "
-                    <script>
-                    setTimeout(function(){window.location.href='menu.php?ID=" .$ID . "';},600);
-                    </script>";
-    }
-?>
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .name{
+            width:200px;
+        }
+        .address{
+            width:200px;
+        }
+        .contact-cell {
+            width: 200px; /* 根據需要調整這裡的寬度 */
+        }
+        .control{
+            width: 100px;
+        }
+    </style>
+</head>
 <body>
-    <div>
-        <form name="sales" action="supplierData.php" method="post">
-        <input type="hidden" name="ID" value="<?=$ID?>">
-        <p>供應商名稱 : <input type="text" name="name" value="<?= isset($_POST['name']) ? htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8') : '' ?>"></p>
-        <p>地址 : <input type="text" name="address" value="<?= isset($_POST['address']) ? htmlspecialchars($_POST['address'], ENT_QUOTES, 'UTF-8') : '' ?>"></p>
-        <?php
-        // 初始化輸入框數量
-        $inputCount = isset($_POST['inputCount']) ? (int)$_POST['inputCount'] : 0;
-        $inputs = isset($_POST['dynamic-input']) ? $_POST['dynamic-input'] : [];
-        // 檢查是否提交表單來添加新的輸入框
-        if (isset($_POST['addInput'])) {
-            $inputCount++;
+<?php
+include 'db.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $ID = $_POST['ID'];
+} else {
+    $ID = $_GET['ID'];
+}
+    echo "<a href='menu.php?ID=" . $ID . "'> <button> <b> menu </b> </button> </a>";
+?>
+<table>
+    <tr>
+        <th>名稱</th>
+        <th>地址</th>
+        <th>聯絡方式</th>
+        <th>操作</th>
+    </tr>
+    <?php
+    $sql = "SELECT * FROM supplier";
+    $result = mysqli_query($db, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo "<tr>";
+            echo "<td class='name'>" . $row["name"] . "</td>";
+            $name = $row["name"];
+            echo "<td class='address'>" . $row["address"] . "</td>";
+            $consql = "SELECT * FROM connection WHERE name = '$name'";
+            $conre = mysqli_query($db, $consql);
+            $n = mysqli_num_rows($conre);
+            echo "<td class='contact-cell'>";
+            for ($i = 0; $i < $n; $i++) {
+                $conro = mysqli_fetch_assoc($conre);
+                $way = $conro['way'];
+                echo $way . "<br>"; // 每個聯絡方式換行顯示
+            }
+            echo "</td>";
+            echo "<td class='control'><a href='editSupplier.php?ID=" . $ID . "&name=".$name."'>Edit</a></td>";
+            echo "</tr>";
         }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dynamic-input'])) {
-            $inputs = $_POST['dynamic-input'];
-        }
-        ?>
-        <form method="post">
-            <div id="input-container">
-                <?php
-                // 根據輸入框數量動態生成輸入框
-                for ($i = 0; $i < $inputCount; $i++) {
-                    $value = isset($inputs[$i]) ? htmlspecialchars($inputs[$i], ENT_QUOTES, 'UTF-8') : '';
-                    echo '<div class="input-container">';
-                    echo '<input type="text" name="dynamic-input[]" value="' . $value . '">';
-                    echo '</div>';
-                }
-                ?>
-            </div>
-            <input type="hidden" name="inputCount" value="<?= $inputCount ?>">
-            <button type="submit" name="addInput">新增聯絡方式 </button>
-            <p><input type="submit" name="submit" value="新增">
-        </form>
-    </div>
-</body>
+    } else {
+        echo "<tr><td colspan='4'>目前沒有資料</td></tr>";
+    }
+    ?>
+</table>
+<?php echo '<a href="addSupplier.php?ID='.$ID.'">新增供應商</a>'; ?>
+<form name="user" action="suppilerData.php" method="post">
+<input type="hidden" name="ID" value="<?=$ID?>">
+</body> 

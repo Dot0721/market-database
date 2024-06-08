@@ -2,6 +2,7 @@
 <?php
     include 'db.php';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $ID=$_POST['ID'];
         $year = $_POST['year'];
         $month = $_POST['month'];
         $day = $_POST['day'];
@@ -9,7 +10,7 @@
     else{
         $ID=$_GET['ID'];
     }
-    echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu </b> </button> </a>";
+    echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu</b> </button> </a>";
     if (isset($_POST['submit'])) {
         $query_date = "'$year-$month-$day'";
         $sql="SELECT 
@@ -20,14 +21,14 @@
         so.sales_amount AS 銷售數量,
         so.sales_price AS 單價,
         so.sale_date AS 銷售日期
-    FROM 
-        sales_order so
-    JOIN 
-        Merchandise m ON so.snumber = m.mnumber
-    WHERE 
-        so.sale_date = $query_date
-    GROUP BY 
-        so.snumber, m.mnumber, m.mname, so.sales_amount, so.sales_price, so.sale_date;    
+        FROM 
+            sales_order so
+        JOIN 
+            Merchandise m ON so.snumber = m.mnumber
+        WHERE 
+            so.sale_date = $query_date
+        GROUP BY 
+            so.snumber, m.mnumber, m.mname, so.sales_amount, so.sales_price, so.sale_date;    
     ";
     $result= mysqli_query($db, $sql);
     $row=mysqli_fetch_assoc($result);
@@ -52,6 +53,7 @@
 ?>
 <body>
     <form name="sales" action="salesReport.php" method="post">
+    <input type="hidden" name="ID" value="<?=$ID?>">
     <label for="year">Year:</label>
         <select id="year" name="year">
             <?php

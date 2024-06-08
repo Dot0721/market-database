@@ -11,21 +11,21 @@
     echo "<a href='menu.php?ID=".$ID."'> <button> <b> menu </b> </button> </a>";
     if (isset($_POST['submit'])) {
         $sql="SELECT 
-        m.mnumber ,
-        m.mname ,
-        COALESCE(AVG(p.purchase_price), 0) as avg ,
-        m.sname ,
-        m.amount ,
-        (m.minimum - m.amount) as lack,
-        m.minimum 
-        FROM 
+            m.mnumber,
+            m.mname,
+            (
+                SELECT COALESCE(AVG(p.purchase_price), 0)
+                FROM purchase_order p
+                WHERE p.pnumber = m.mnumber
+            ) AS avg,
+            m.sname,
+            m.amount,
+            (m.minimum - m.amount) AS lack,
+            m.minimum
+            FROM 
             Merchandise m
-        LEFT JOIN 
-            purchase_order p ON m.mnumber = p.pnumber
-        WHERE 
-            m.mnumber = $mnumber
-        GROUP BY 
-            m.mnumber, m.mname, m.sname, m.amount, m.minimum;
+            WHERE 
+            m.mnumber = $mnumber;
         ";
         $result= mysqli_query($db, $sql);
         $row=mysqli_fetch_assoc($result);
