@@ -14,21 +14,19 @@
     if (isset($_POST['submit'])) {
         $query_date = "'$year-$month-$day'";
         $sql="SELECT 
-        SUM(so.sales_price * so.sales_amount) AS sum,
-        so.snumber AS 銷售訂單編號,
-        m.mnumber AS 商品編號,
-        m.mname AS 商品名稱,
-        so.sales_amount AS 銷售數量,
-        so.sales_price AS 單價,
-        so.sale_date AS 銷售日期
-        FROM 
-            sales_order so
-        JOIN 
-            Merchandise m ON so.snumber = m.mnumber
-        WHERE 
-            so.sale_date = $query_date
-        GROUP BY 
-            so.snumber, m.mnumber, m.mname, so.sales_amount, so.sales_price, so.sale_date;    
+    so.snumber AS 銷售訂單編號,
+    m.mnumber AS 商品編號,
+    m.mname AS 商品名稱,
+    so.sales_amount AS 銷售數量,
+    so.sales_price AS 單價,
+    so.sale_date AS 銷售日期,
+    SUM(so.sales_amount * so.sales_price) OVER (PARTITION BY so.sale_date) AS sum
+FROM 
+    sales_order so
+JOIN 
+    Merchandise m ON so.snumber = m.mnumber
+WHERE 
+    so.sale_date = $query_date;  
     ";
     $result= mysqli_query($db, $sql);
     $row=mysqli_fetch_assoc($result);
