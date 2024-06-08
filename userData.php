@@ -6,6 +6,7 @@
         <th>姓名</th>
         <th>密碼</th>
         <th>使用者權限</th>
+        <th>職位</th>
         <th>設定</th>
     </tr>
 <?php
@@ -27,6 +28,13 @@
             echo "<td>" . $row["name"] . "</td>";
             echo "<td>" . $row["password"] . "</td>";
             echo "<td>" . $row["permissionlevel"] . "</td>";
+            if($row['casherflag']==1){
+                echo "<td>" . "收銀員/銷售人員" . "</td>";
+            }elseif($row['storeflag']==1){
+                echo "<td>" . "倉庫管理員" . "</td>";
+            }else{
+                echo "<td>" . "主管" . "</td>";
+            }         
             echo "<td>" . '<a href="editUser.php?ID=' . $ID .'&UID=' . $UID .'">Edit</a>' . "</td>";
             echo "</tr>";
         }
