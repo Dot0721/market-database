@@ -43,6 +43,8 @@
         echo"剩餘商品數量:$amount<br>";
         if($lack<=0){
            echo"需採購數量:0<br>"; 
+        }else{
+            echo"需採購數量:$lack<br>"; 
         }
         echo"最低需求庫存量:$min<br>";
     }
