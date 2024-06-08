@@ -41,7 +41,9 @@
         echo"進貨平均單價:$avg<br>";
         echo"供應商名稱:$sname<br>";
         echo"剩餘商品數量:$amount<br>";
-        echo"需採購數量:$lack<br>";
+        if($lack<=0){
+           echo"需採購數量:0<br>"; 
+        }
         echo"最低需求庫存量:$min<br>";
     }
 ?>

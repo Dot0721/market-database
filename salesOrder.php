@@ -27,12 +27,14 @@
         $day = $_POST['day'];
         $query_date = "'$year-$month-$day'";
         echo "$query_date,$snumber,$sales_amount,$sales_price,$ID";
-        $sql="insert sales_order(sale_date,snumber,sales_amount,sales_price,ID) values ($query_date,$snumber,$sales_amount,$sales_price,$ID)";
+        $sql="insert sales_order(sale_date,snumber,sales_amount,sales_price,ID) 
+        values ($query_date,$snumber,$sales_amount,$sales_price,$ID)";
         $result = mysqli_query($db, $sql);
             if (!$result) {
                 die('Error: ' . mysqli_error($con));
             } else {
-                
+                $sql="UPDATE `merchandise` SET amount=amount-$sales_amount WHERE mnumber=$snumber";
+                $result = mysqli_query($db, $sql);
                 echo '<div class="success">Insert successfully ！</div>';
                 echo "
                     <script>
