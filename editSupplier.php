@@ -19,19 +19,34 @@
         $ID=$_POST['ID'];
         $name=$_POST['name'];
         $address=$_POST['address'];
-        $sql="UPDATE `users` SET `name`='$name',`address`='$address' WHERE name=$name";
+        $sql="UPDATE `supplier` SET `name`='$name',`address`='$address' WHERE name='$name'";
         $result = mysqli_query($db,$sql);
         if (!$result) {
             die('Error: ' . mysqli_error($db));
         } else {
+                $sql="DELETE FROM connection
+                WHERE name = '$name'";
+                $result = mysqli_query($db,$sql);
+                $inputCount = isset($_POST['inputCount']) ? (int)$_POST['inputCount'] : 0;
+                $inputs = isset($_POST['dynamic-input']) ? $_POST['dynamic-input'] : [];
+                for ($i = 0; $i < $inputCount; $i++) {
+                    $value = isset($inputs[$i]) ? htmlspecialchars($inputs[$i], ENT_QUOTES, 'UTF-8') : '';
+                    echo "$value";
+                    $sql = "INSERT INTO connection (way, name) 
+                    VALUES ('$value', '$name')";
+                    $result = mysqli_query($db, $sql);
+                }
             echo "
                 <script>
-                setTimeout(function(){window.location.href='UserData.php?ID=" .$ID . "';},600);
+                setTimeout(function(){window.location.href='supplierData.php?ID=" .$ID . "';},600);
                 </script>";
             echo '<div class="success">Update successfully ！</div>';                
         }
     }elseif(isset($_POST['delete'])){
         $sql="DELETE FROM `supplier` WHERE name=$name";
+        $result = mysqli_query($db,$sql);
+        $sql="DELETE FROM connection
+                WHERE name = '$name'";
         $result = mysqli_query($db,$sql);
         if (!$result) {
             die('Error: ' . mysqli_error($db));
@@ -69,22 +84,20 @@
         <form method="post">
             <div id="input-container">
                 <?php
-                $consql = "SELECT * FROM connection WHERE name = '$name'";
-                $conre = mysqli_query($db, $consql);
-                $n = mysqli_num_rows($conre);
-                while($corow = mysqli_fetch_assoc($conre)){
-                    $value = $corow['way'];
+                // 根據輸入框數量動態生成輸入框
+                for ($i = 0; $i < $inputCount; $i++) {
+                    $value = isset($inputs[$i]) ? htmlspecialchars($inputs[$i], ENT_QUOTES, 'UTF-8') : '';
                     echo '<div class="input-container">';
                     echo '<input type="text" name="dynamic-input[]" value="' . $value . '">';
                     echo '<button type="submit" name="deleteInput">delete </button>';
                     echo '</div>';
                 }
-                    
                 ?>
             </div>
             <input type="hidden" name="inputCount" value="<?= $inputCount ?>">
             <button type="submit" name="addInput">新增聯絡方式 </button>
-            <p><input type="submit" name="submit" value="新增">
+            <p><input type="submit" name="change" value="更新">
+            <p><input type="submit" name="delete" value="刪除">
         </form>
     </div>
 </body>
