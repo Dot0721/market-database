@@ -43,10 +43,10 @@
             echo '<div class="success">Update successfully ！</div>';                
         }
     }elseif(isset($_POST['delete'])){
-        $sql="DELETE FROM `supplier` WHERE name=$name";
-        $result = mysqli_query($db,$sql);
         $sql="DELETE FROM connection
                 WHERE name = '$name'";
+        $result = mysqli_query($db,$sql);
+        $sql="DELETE FROM `supplier` WHERE name='$name'";
         $result = mysqli_query($db,$sql);
         if (!$result) {
             die('Error: ' . mysqli_error($db));
