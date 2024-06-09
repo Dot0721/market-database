@@ -53,7 +53,7 @@
         } else {
             echo "
                 <script>
-                setTimeout(function(){window.location.href='UserData.php?ID=" .$ID . "';},600);
+                setTimeout(function(){window.location.href='supplierData.php?ID=" .$ID . "';},600);
                 </script>";
             echo '<div class="success">Delete successfully ！</div>';                
         }
